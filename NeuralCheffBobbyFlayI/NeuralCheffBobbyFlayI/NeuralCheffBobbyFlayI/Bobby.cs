@@ -67,7 +67,7 @@ namespace NeuralCheffBobbyFlayI
             p.StartInfo.RedirectStandardOutput = true;
             p.StartInfo.CreateNoWindow = true;
             p.StartInfo.FileName = "CMD.exe";
-            p.StartInfo.Arguments = "/c where py";
+            p.StartInfo.Arguments = "/c where python";
             p.Start();
             string output = p.StandardOutput.ReadToEnd();
             return output;
