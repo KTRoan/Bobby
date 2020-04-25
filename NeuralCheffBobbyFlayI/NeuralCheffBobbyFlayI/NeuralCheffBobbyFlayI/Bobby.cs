@@ -40,18 +40,20 @@ namespace NeuralCheffBobbyFlayI
             try
             {
                 Process p = new Process();
-                p.StartInfo = new ProcessStartInfo(pySource, fileName)
+                ProcessStartInfo start = new ProcessStartInfo();
+                start.FileName = pySource;
+                start.Arguments = fileName;
+                start.CreateNoWindow = true;
+                start.UseShellExecute = false;
+                start.RedirectStandardOutput = true;
+                using (Process process = Process.Start(start))
                 {
-                    RedirectStandardOutput = true, //this is mostly for the test, but may want to keep later
-                    UseShellExecute = false, //probably want to keep this unless the guys working on the model suggest using a shell
-                    CreateNoWindow = true, //definitely want to keep this
-                    ErrorDialog = true, //probably not necessary, at least not yet
-                    RedirectStandardError = true //same as above
-                };
-                p.Start();
-                string output = p.StandardOutput.ReadToEnd(); //will probably need to change this line when using the model
-                p.Close();
-                textBox1.Text = output;
+                    using (StreamReader reader = process.StandardOutput)
+                    {
+                        string result = reader.ReadToEnd();
+                        textBox1.Text = result;
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -67,7 +69,7 @@ namespace NeuralCheffBobbyFlayI
             p.StartInfo.RedirectStandardOutput = true;
             p.StartInfo.CreateNoWindow = true;
             p.StartInfo.FileName = "CMD.exe";
-            p.StartInfo.Arguments = "/c where python";
+            p.StartInfo.Arguments = "/c where py";
             p.Start();
             string output = p.StandardOutput.ReadToEnd();
             return output;
