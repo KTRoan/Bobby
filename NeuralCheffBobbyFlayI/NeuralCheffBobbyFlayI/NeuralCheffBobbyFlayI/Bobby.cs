@@ -184,5 +184,10 @@ namespace NeuralCheffBobbyFlayI
             textBox1.Text = lastrecipe;
             label2.Text = "";
         }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
